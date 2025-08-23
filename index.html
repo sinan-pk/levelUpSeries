@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level Up Series – September Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- Hero / About Section -->
+  <header>
+    <h1 class="logo">growwithsana</h1>
+    <h1>🌟 The Level-Up Series: September Edition 🌟</h1>
+    <p><strong>Your month to reset, refocus, and rise.</strong></p>
+    <p>Level-Up isn’t just another challenge—it’s a system designed to help you build clarity, discipline, and self-trust. Over the month, you’ll work on habits that actually stick, reflect on your progress, and step into a more focused, confident version of yourself.</p>
+    <!-- <a href="form.html" class="join">Join Now</a> -->
+  </header>
+
+  <!-- About Section -->
+  <section class="about-section">
+    <h3>✨ What You’ll Get</h3>
+   <section class="programPlans">
+       <div class="plan">
+          <h3>Level-Up Essentials</h3>
+          <ul>
+            <li>Goal-Setting Workshop (August 30)</li>
+            <li>Monthly Bullet Journaling Guide</li>
+            <li>Weekly Reflection Sessions</li>
+            <li>Month-End Review + Next Steps Plan</li>
+            <li>Materials: Monthly Calendar + Habit Tracker</li>
+            <li>Special focus on building a reading + journaling habit</li>
+          </ul>
+        </div>
+
+        <div class="plan">
+          <h3>Level-Up Intensive</h3>
+          <!-- <p>Everything in Essentials, plus:</p> -->
+          <ul>
+            <li>Goal-Setting Workshop (August 30)</li>
+            <li>Monthly Bullet Journaling Guide</li>
+            <li>Weekly Reflection Sessions</li>
+            <li>Month-End Review + Next Steps Plan</li>
+            <li>Materials: Monthly Calendar + Habit Tracker</li>
+            <li>Special focus on building a reading + journaling habit</li>
+            <li>Daily One-on-One WhatsApp Check-Ins</li>
+            <li>Personalized Guidance & Accountability</li>
+          </ul>
+        </div>
+   </section>
+
+    <h3>🚀 Why Join?</h3>
+    <p>This is your chance to take September seriously—no more drifting, no more excuses. With structured systems and consistent support, you’ll:</p>
+    <ul>
+      <li>✔ Build habits that last</li>
+      <li>✔ Reflect, reset, and refocus weekly</li>
+      <li>✔ Step into your most productive and disciplined self</li>
+    </ul>
+
+    <h3>💳 Payment & Plans</h3>
+    <ul>
+      <li>Level-Up Essentials – ₹399</li>
+      <li>Level-Up Intensive – ₹499</li>
+    </ul>
+
+    <p>Once your payment is confirmed, you’ll get instant access to:</p>
+    <ul>
+      <li>All materials</li>
+      <li>Session details</li>
+      <li>Your onboarding steps</li>
+    </ul>
+
+    <p style="font-weight:600; text-align:center; margin-top:20px; font-size:1.1rem;">
+      ✨ Let’s make September your most focused, productive, and disciplined month yet! ✨
+    </p>
+      <p style="text-align:center; margin:15px 0; font-size:1rem; color:#555;">
+        👉 Click below to choose the program you want to join
+      </p>
+    <div class="joinButtons">
+      <a href="form.html?program=essentials" class="join">Join Essentials</a>
+      <a href="form.html?program=intensive" class="join">Join Intensive</a>
+    </div>
+
+  </section>
+
+  <!-- Review / Testimonial Section -->
+  <section class="reviewSection">
+    <h2 style="text-align:center; margin-bottom:30px;">What People Say</h2>
+    <div class="reviews">
+      <div class="review-card">
+        <img src="https://via.placeholder.com/70" alt="reviewer">
+        <p>"This program was <strong>life-changing</strong>. I feel more <strong>motivated</strong> and disciplined than ever!"</p>
+      </div>
+      <div class="review-card">
+        <img src="https://via.placeholder.com/70" alt="reviewer">
+        <p>"A truly amazing experience. Helped me structure my time and stay <strong>disciplined</strong> every day."</p>
+      </div>
+      <div class="review-card">
+        <img src="https://via.placeholder.com/70" alt="reviewer">
+        <p>"Loved the energy! This September edition gave me a fresh start. Feeling so <strong>motivated</strong>!"</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <h2 style="margin-bottom:15px; font-family:'Poppins', sans-serif; color:#4a7c59;">
+      Grow With Sana
+    </h2>
+
+    <!-- Social Icons -->
+    <div style="margin-bottom:15px; font-size:1.5rem;">
+      <a href="https://instagram.com/yourpage" target="_blank" style="text-decoration: none;">
+        <img src="images/instagram (2).png" alt="Instagram">
+      </a>
+      <a href="https://youtube.com/yourchannel" target="_blank" style="text-decoration: none;">
+        <img src="images/youtube (2).png" alt="YouTube">
+      </a>
+      <a href="mailto:growwithsana.official@gmail.com" style="text-decoration: none;">
+        <img src="images/email (2).png" alt="Email">
+      </a>
+    </div>
+
+    <!-- Copyright -->
+    <p style="font-size:0.9rem; color:#555;">© 2025 Grow With Sana | All Rights Reserved</p>
+  </footer>
+
+
+
+  <script>
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    }); // Prevent right-click, but allow on input, textarea, and editable divs
+    document.addEventListener('contextmenu', (event) => {
+        const target = event.target;
+        const allowedTags = ['INPUT', 'TEXTAREA'];
+        
+        if (!allowedTags.includes(target.tagName) && !target.isContentEditable) {
+            event.preventDefault();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        const target = event.target;
+        const allowedTags = ['INPUT', 'TEXTAREA'];
+
+        // Allow premium operations inside input and textarea
+        if (allowedTags.includes(target.tagName) || target.isContentEditable) {
+            return;
+        }
+
+        // Block F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+        if (
+            event.keyCode === 123 || // F12
+            (event.ctrlKey && event.shiftKey && (event.keyCode === 73 || event.keyCode === 74)) || // Ctrl+Shift+I or Ctrl+Shift+J
+            (event.ctrlKey && event.keyCode === 85) // Ctrl+U
+        ) {
+            event.preventDefault();
+        }
+    });
+  </script>
+</body>
+</html>

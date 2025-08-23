@@ -1,0 +1,251 @@
+  body {
+      font-family: Arial, sans-serif;
+      background: #f5f8ff;
+      margin: 0;
+      padding: 0;
+       -webkit-user-select: none; /* Chrome, Safari */
+      -moz-user-select: none;    /* Firefox */
+      -ms-user-select: none;     /* IE/Edge */
+      user-select: none;         /* Standard */
+    }
+    section {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .payment-section {
+      text-align: center;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 40px;
+    }
+    .payment-section h2 {
+      margin-bottom: 15px;
+      color: #333;
+    }
+    .payment-section img {
+      max-width: 200px;
+      margin: 15px 0;
+      cursor: pointer;
+    }
+    .hint {
+      font-size: 0.9rem;
+      color: #555;
+      margin: 6px 0;
+    }
+    .upi-id {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #4a7c59;
+      margin: 10px 0;
+    }
+    .copy-btn {
+      margin-left: 10px;
+      padding: 4px 10px;
+      border: none;
+      background: #4a7c59;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .note {
+      font-size: 0.95rem;
+      color: #666;
+      margin-top: 10px;
+    }
+    .fee-display {
+      font-size: 1.2rem;
+      color: #222;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .done-btn {
+      margin-top: 20px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #a3b18a, #588157);
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .done-btn:hover {
+      transform: scale(1.05);
+    }
+    /* Program selection cards */
+    .program-options {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0;
+    }
+    .program-card {
+      border: 2px solid #ccc;
+      border-radius: 12px;
+      padding: 20px 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: #fafafa;
+      font-size: 1rem;
+      font-weight: bold;
+      width: 200px;
+      text-align: center;
+    }
+    .program-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    }
+    .program-card input {
+      display: none;
+    }
+    .program-card.selected {
+      border-color: #588157;
+      background: linear-gradient(135deg, #a3b18a, #588157);
+      color: white;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+
+
+  .form-container {
+    display: none;
+    max-width: 700px;
+    margin: auto;
+    padding: 25px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 26px;
+    color: #333;
+  }
+
+  /* Grid Layout for inputs */
+  #regForm {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4%;
+    row-gap: 15px;
+  }
+
+  
+  #regForm input {
+    width: 48%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+     box-sizing: border-box;
+     outline: 1px solid #588157;
+  }
+  #screenshotWrapper input {
+        width: 100%;
+  }
+ 
+  #regForm button {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #regForm button {
+    width: 100%;
+    background: linear-gradient(135deg, #a3b18a, #588157);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+  }
+
+
+
+  /* Payment proof section */
+  .payment-proof {
+    width: 100%;
+  }
+
+  .payment-proof p {
+    margin: 0 5px 8px 5px;
+    font-weight: 500;
+    color: #444;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .payment-row {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content:center;
+  }
+
+  /* Screenshot Upload Box */
+  #screenshotWrapper {
+    flex: 1;
+  }
+
+  #screenshot {
+    display: block;
+    width: 100%;
+    border: 2px dashed #bbb;
+    border-radius: 10px;
+    padding: 35px;
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
+    background: #fff;
+  }
+
+  /* Preview box overrides */
+  #screenshotPreview {
+    width: 100px !important;
+    height: 100px !important;
+  }
+
+  /* Transaction ID */
+  #txnId {
+    flex: 1;
+  }
+
+  /* Responsive adjustments */
+@media (max-width: 768px) {
+   section{
+        padding: 10px;
+    }
+    .payment-section {
+        padding: 10px;
+        margin-bottom: 0;
+    }
+    p{
+        line-height: 1.5;
+    }
+    #regForm {
+     flex-direction: column;
+    }
+    #regForm input {
+        width: 100%;
+    }
+ 
+  .payment-row {
+    flex-direction: column;
+  }
+  
+  .payment-proof p {
+    font-size: 14px;
+  }
+}
+

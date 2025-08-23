@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level Up Series – Registration</title>
+  <link rel="stylesheet" href="form.css">
+</head>
+<body>
+
+    <!-- Payment Section -->
+    <section id="paymentSection">
+      <div class="payment-section">
+        <h2>Step 1: Select Your Program & Make Payment</h2>
+
+        <!-- Program Selection -->
+        <div class="program-options">
+          <label class="program-card">
+            <input type="radio" name="program" value="299" data-name="Level-Up Essentials" checked>
+            Level-Up Essentials<br>(₹299)
+          </label>
+          <label class="program-card">
+            <input type="radio" name="program" value="399" data-name="Level-Up Intensive">
+            Level-Up Intensive<br>(₹399)
+          </label>
+        </div>
+
+        <!-- QR Code -->
+        <p>Please scan the QR code below or pay using the UPI ID provided.</p>
+        <img id="qrCode" src="images/qr.jpg" alt="QR Code for Payment">
+        <p class="hint">💡 Tip: You can click on this QR to directly open your UPI app.</p>
+        <p class="hint"><strong>After your payment, click the "Done Payment" button below.</strong></p>
+
+        <!-- UPI ID + Copy -->
+        <p class="upi-id">
+          UPI ID: <span id="upiId">pvsana33@oksbi</span>
+          <button id="copyBtn" class="copy-btn">Copy</button>
+          <input type="text" id="upiText" value="upi://pay?pa=pvsana33@oksbi&pn=LevelUpSeries&am=299&cu=INR" readonly hidden/>
+        </p>
+
+        <!-- Fee Display -->
+        <p id="feeDisplay" class="fee-display"></p>
+
+        <p class="note">⚠️ First pay to this, then fill the form below.  
+        Provide either the <strong>payment screenshot</strong> OR <strong>Transaction ID</strong>.</p>
+
+        <!-- Done Payment Button -->
+        <button id="doneBtn" class="done-btn">✅ Done Payment</button>
+      </div>
+    </section>
+
+    <!-- Registration Form Section -->
+    <!-- Registration Form Section -->
+  <section>
+    <div class="form-container" id="formContainer">
+      <h2>Register Now</h2>
+      <form id="regForm">
+        <input type="text" placeholder="Name*" required>
+        <input type="number" placeholder="Age*" required>
+        <input type="tel" placeholder="Phone Number*" required>
+        <input type="email" placeholder="Email" required>
+
+        <!-- readonly program field -->
+        <input id="programInput" type="text" placeholder="Selected Program*" readonly required>
+
+        <input type="text" placeholder="Instagram ID*" required>
+
+
+        <!-- Screenshot or Transaction ID -->
+        <div class="payment-proof">
+          <p>Upload screenshot of payment done OR provide Transaction ID of payment</p>
+          <div class="payment-row">
+            <div id="screenshotWrapper">
+              <input type="file" id="screenshot" accept="image/*">
+              <div id="screenshotPreview" style="display: none; position: relative; margin-top: 10px;">
+                <img id="previewImg" src="" alt="Screenshot Preview" 
+                    style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px; border: 2px solid #ccc; padding: 5px;">
+                <button id="deleteScreenshot" 
+                        style="position: absolute; top: -20px; right: -20px; background: #e63946; color: white; border: none; border-radius: 50%; width: 25px; height: 25px; cursor: pointer; display:flex; justify-content: center; align-items: center; font-size: 20px;">×</button>
+              </div>
+            </div>
+            <input type="text" id="txnId" placeholder="Transaction ID">
+          </div>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+
+      <!-- Back to Payment Button -->
+      <button id="backToPaymentBtn" 
+              style="margin-top:15px; padding:12px 20px; background:#555; color:white; border:none; border-radius:10px; cursor:pointer;">
+        🔙 Back to Payment
+      </button>
+    </div>
+  </section>
+
+<!-- Loader -->
+<div id="loader" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
+     background:rgba(0,0,0,0.5);  justify-content:center; align-items:center; z-index:9999;">
+  <div style="border: 8px solid #f3f3f3; border-top: 8px solid #3498db; border-radius:50%; width:60px; height:60px; animation: spin 1s linear infinite;"></div>
+</div>
+
+<!-- Success Message -->
+<div id="successMessage" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); 
+     background:#fff; padding:30px; border-radius:15px; box-shadow:0 0 10px rgba(0,0,0,0.3); text-align:center; z-index:10000;">
+  <h2>✅ Your request has been successfully submitted!</h2>
+  <button id="closeSuccess" style="margin-top:15px; padding:10px 20px; border:none; background:#3498db; color:#fff; border-radius:10px; cursor:pointer;">OK</button>
+</div>
+
+<style>
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+
+
+  <script>
+    const qrCode = document.getElementById("qrCode");
+    const feeDisplay = document.getElementById("feeDisplay");
+    const programOptions = document.querySelectorAll(".program-card input");
+    const upiId = document.getElementById("upiId").innerText;
+    const programInput = document.getElementById("programInput");
+
+    const screenshot = document.getElementById("screenshot");
+    const txnId = document.getElementById("txnId");
+
+    const paymentSection = document.getElementById("paymentSection");
+    const formContainer = document.getElementById("formContainer");
+    const doneBtn = document.getElementById("doneBtn");
+
+    let selectedAmount = null;
+
+    // Handle program selection
+    programOptions.forEach(option => {
+      option.addEventListener("change", () => {
+        updateProgram(option);
+      });
+    });
+
+   function updateProgram(option) {
+      selectedAmount = option.value;
+      const programName = option.getAttribute("data-name");
+      feeDisplay.textContent = "Fee: ₹" + selectedAmount;
+      programInput.value = programName + " (₹" + selectedAmount + ")";
+
+      // Highlight selected card
+      document.querySelectorAll(".program-card").forEach(card => card.classList.remove("selected"));
+      option.parentElement.classList.add("selected");
+
+      // Update QR click to UPI intent
+      qrCode.onclick = function() {
+        const upiLink = `upi://pay?pa=${upiId}&pn=LevelUpSeries&am=${selectedAmount}&cu=INR`;
+        window.location.href = upiLink;
+      };
+
+      // 🔥 Update URL param without reload
+      const programSlug = (selectedAmount === "299") ? "essentials" : "intensive";
+      const newUrl = `${window.location.pathname}?program=${programSlug}`;
+      history.replaceState(null, "", newUrl);
+    }
+
+
+    // Default select Essentials program on load
+    const defaultOption = document.querySelector('.program-card input:checked');
+    if (defaultOption) {
+      updateProgram(defaultOption);
+    }
+
+    // Copy UPI with button state change
+    const copyBtn = document.getElementById("copyBtn");
+    const upiText = document.getElementById("upiText");
+    copyBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(upiText.value).then(() => {
+        copyBtn.textContent = "Copied";
+        copyBtn.disabled = true;
+        setTimeout(() => {
+          copyBtn.textContent = "Copy";
+          copyBtn.disabled = false;
+        }, 3000);
+      }).catch(err => console.error("Copy failed", err));
+    });
+
+    // Show form when payment done
+    doneBtn.addEventListener("click", () => {
+      paymentSection.style.display = "none";
+      formContainer.style.display = "block";
+    });
+
+    // Screenshot + Transaction ID logic
+    const screenshotPreview = document.getElementById("screenshotPreview");
+    const previewImg = document.getElementById("previewImg");
+    const deleteScreenshot = document.getElementById("deleteScreenshot");
+
+    screenshot.addEventListener("change", () => {
+      if (screenshot.files && screenshot.files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          previewImg.src = e.target.result;
+          screenshotPreview.style.display = "block";
+          screenshot.style.display = "none";
+          txnId.style.display = "none";
+        };
+        reader.readAsDataURL(screenshot.files[0]);
+      }
+    });
+
+    deleteScreenshot.addEventListener("click", () => {
+      screenshot.value = "";
+      screenshotPreview.style.display = "none";
+      screenshot.style.display = "block";
+      txnId.style.display = "block";
+    });
+
+    txnId.addEventListener("input", () => {
+      if (txnId.value.trim() !== "") {
+        screenshotWrapper.style.display = "none";
+      } else {
+        screenshotWrapper.style.display = "block";
+      }
+    });
+
+const loader = document.getElementById("loader");
+const successMessage = document.getElementById("successMessage");
+const closeSuccess = document.getElementById("closeSuccess");
+
+document.getElementById("regForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  if (txnId.value.trim() === "" && screenshot.files.length === 0) {
+    alert("Please provide either Transaction ID or Payment Screenshot.");
+    return;
+  }
+
+  // Show loader
+  loader.style.display = "flex";
+
+  // Convert image to Base64 if provided
+  let photoBase64 = "";
+  let photoName = "";
+  if (screenshot.files.length > 0) {
+    const file = screenshot.files[0];
+    photoName = file.name;
+    const reader = new FileReader();
+    photoBase64 = await new Promise((resolve) => {
+      reader.onload = () => resolve(reader.result);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  const formData = {
+    name: document.querySelector('input[placeholder="Name*"]').value,
+    age: document.querySelector('input[placeholder="Age*"]').value,
+    phone: document.querySelector('input[placeholder="Phone Number*"]').value,
+    email: document.querySelector('input[placeholder="Email"]').value,
+    program: programInput.value,
+    instagram: document.querySelector('input[placeholder="Instagram ID*"]').value,
+    transactionId: txnId.value,
+    photo: photoBase64,
+    photoName: photoName
+  };
+
+  try {
+    const res = await fetch("https://script.google.com/macros/s/AKfycbwN9d7nE49l5kX5UXIr5Y_iLVn3EYv0ZBuHs28jQZs4eZLglZv-gFtZB8azcQ1akxuw2g/exec", {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: { "Content-Type": "application/json" },
+      mode: "no-cors"
+    });
+
+    // Hide loader
+    loader.style.display = "none";
+
+    // Show success message
+    successMessage.style.display = "block";
+
+    // Reset form
+    document.getElementById("regForm").reset();
+    programInput.value = formData.program;
+
+  } catch (err) {
+    loader.style.display = "none";
+    console.error("Error:", err);
+    alert("❌ Something went wrong. Try again.");
+  }
+});
+
+// Close success message
+closeSuccess.addEventListener("click", () => {
+   window.location.href = "index.html";
+});
+
+
+
+
+      const backToPaymentBtn = document.getElementById("backToPaymentBtn");
+
+      backToPaymentBtn.addEventListener("click", () => {
+        formContainer.style.display = "none";
+        paymentSection.style.display = "block";
+      });
+
+
+
+      // Pre-select program based on URL param
+const urlParams = new URLSearchParams(window.location.search);
+const selectedProgram = urlParams.get("program");
+
+let optionToSelect;
+if (selectedProgram === "essentials") {
+  optionToSelect = document.querySelector('.program-card input[value="299"]');
+} else if (selectedProgram === "intensive") {
+  optionToSelect = document.querySelector('.program-card input[value="399"]');
+}
+
+// If URL param matches → select that, else default Essentials
+if (optionToSelect) {
+  optionToSelect.checked = true;
+  updateProgram(optionToSelect);
+} else {
+  const defaultOption = document.querySelector('.program-card input[value="299"]');
+  defaultOption.checked = true;
+  updateProgram(defaultOption);
+}
+
+
+
+
+
+ // Prevent right-click, but allow on input, textarea, and editable divs
+    document.addEventListener('contextmenu', (event) => {
+        const target = event.target;
+        const allowedTags = ['INPUT', 'TEXTAREA'];
+        
+        if (!allowedTags.includes(target.tagName) && !target.isContentEditable) {
+            event.preventDefault();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        const target = event.target;
+        const allowedTags = ['INPUT', 'TEXTAREA'];
+
+        // Allow premium operations inside input and textarea
+        if (allowedTags.includes(target.tagName) || target.isContentEditable) {
+            return;
+        }
+
+        // Block F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+        if (
+            event.keyCode === 123 || // F12
+            (event.ctrlKey && event.shiftKey && (event.keyCode === 73 || event.keyCode === 74)) || // Ctrl+Shift+I or Ctrl+Shift+J
+            (event.ctrlKey && event.keyCode === 85) // Ctrl+U
+        ) {
+            event.preventDefault();
+        }
+    });
+
+  </script>
+</body>
+</html>

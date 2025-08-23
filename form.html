@@ -100,10 +100,10 @@
 </div>
 
 <!-- Success Message -->
-<div id="successMessage" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); 
-     background:#fff; padding:30px; border-radius:15px; box-shadow:0 0 10px rgba(0,0,0,0.3); text-align:center; z-index:10000;">
+<div id="successMessage">
   <h2>✅ Your request has been successfully submitted!</h2>
-  <button id="closeSuccess" style="margin-top:15px; padding:10px 20px; border:none; background:#3498db; color:#fff; border-radius:10px; cursor:pointer;">OK</button>
+  <p>Our team will connect with you through WhatsApp shortly.</p>
+  <button id="closeSuccess">OK</button>
 </div>
 
 <style>
@@ -161,10 +161,10 @@
 
 
     // Default select Essentials program on load
-    const defaultOption = document.querySelector('.program-card input:checked');
-    if (defaultOption) {
-      updateProgram(defaultOption);
-    }
+    // const defaultOption = document.querySelector('.program-card input:checked');
+    // if (defaultOption) {
+    //   updateProgram(defaultOption);
+    // }
 
     // Copy UPI with button state change
     const copyBtn = document.getElementById("copyBtn");
@@ -356,5 +356,6 @@ if (optionToSelect) {
     });
 
   </script>
+
 </body>
 </html>

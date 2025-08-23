@@ -221,6 +221,28 @@
     flex: 1;
   }
 
+  #successMessage{
+    display:none; 
+    position:fixed; 
+    top:50%; left:50%; 
+    transform:translate(-50%, -50%); 
+    background:#fff; 
+    padding:30px; 
+    border-radius:15px; 
+    box-shadow:0 0 10px rgba(0,0,0,0.3); 
+    text-align:center; 
+    z-index:10000;
+  }
+
+  #closeSuccess{
+    margin-top:15px; 
+    padding:10px 20px; 
+    border:none; 
+     background: linear-gradient(135deg, #a3b18a, #588157);
+    color:#fff; 
+    border-radius:10px; 
+    cursor:pointer;
+  }
   /* Responsive adjustments */
 @media (max-width: 768px) {
    section{
@@ -246,6 +268,13 @@
   
   .payment-proof p {
     font-size: 14px;
+  }
+  #successMessage{
+    width: 85%;
+    padding: 10px;
+  }
+  #successMessage h2{
+    font-size: 1rem;
   }
 }
 

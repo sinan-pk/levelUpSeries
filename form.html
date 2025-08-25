@@ -58,7 +58,7 @@
         <input type="text" placeholder="Name*" required>
         <input type="number" placeholder="Age*" required>
         <input type="tel" placeholder="Phone Number*" required>
-        <input type="email" placeholder="Email" required>
+        <input type="email" placeholder="Email*" required>
 
         <!-- readonly program field -->
         <input id="programInput" type="text" placeholder="Selected Program*" readonly required>
@@ -96,7 +96,7 @@
 <!-- Loader -->
 <div id="loader" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
      background:rgba(0,0,0,0.5);  justify-content:center; align-items:center; z-index:9999;">
-  <div style="border: 8px solid #f3f3f3; border-top: 8px solid #3498db; border-radius:50%; width:60px; height:60px; animation: spin 1s linear infinite;"></div>
+  <div style="border: 8px solid #f3f3f3; border-top: 8px solid #588157; border-radius:50%; width:60px; height:60px; animation: spin 1s linear infinite;"></div>
 </div>
 
 <!-- Success Message -->
@@ -112,6 +112,14 @@
   100% { transform: rotate(360deg); }
 }
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+   (function() {
+      emailjs.init("H5O8Mnk_IWGOAkzyq"); // ⚠️ Replace with your actual Public Key
+   })();
+</script>
+
 
 
   <script>
@@ -272,6 +280,15 @@ document.getElementById("regForm").addEventListener("submit", async (e) => {
 
     // Show success message
     successMessage.style.display = "block";
+
+    emailjs.send("service_bezo338", "template_z5ppyei", {
+      name: formData.name,
+      email: formData.email,
+      program: formData.program,
+      message: `Hi ${formData.name}, 
+      Your request for ${formData.program} has been successfully submitted. 🎉 
+      We will check and share updates with you soon. 🚀`
+    })
 
     // Reset form
     document.getElementById("regForm").reset();

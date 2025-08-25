@@ -16,12 +16,12 @@
         <!-- Program Selection -->
         <div class="program-options">
           <label class="program-card">
-            <input type="radio" name="program" value="299" data-name="Level-Up Essentials" checked>
-            Level-Up Essentials<br>(₹299)
+            <input type="radio" name="program" value="399" data-name="Level-Up Essentials" checked>
+            Level-Up Essentials<br>(₹399)
           </label>
           <label class="program-card">
-            <input type="radio" name="program" value="399" data-name="Level-Up Intensive">
-            Level-Up Intensive<br>(₹399)
+            <input type="radio" name="program" value="499" data-name="Level-Up Intensive">
+            Level-Up Intensive<br>(₹499)
           </label>
         </div>
 
@@ -35,7 +35,7 @@
         <p class="upi-id">
           UPI ID: <span id="upiId">pvsana33@oksbi</span>
           <button id="copyBtn" class="copy-btn">Copy</button>
-          <input type="text" id="upiText" value="upi://pay?pa=pvsana33@oksbi&pn=LevelUpSeries&am=299&cu=INR" readonly hidden/>
+          <input type="text" id="upiText" value="upi://pay?pa=pvsana33@oksbi&pn=LevelUpSeries&am=399&cu=INR" readonly hidden/>
         </p>
 
         <!-- Fee Display -->
@@ -162,7 +162,7 @@
       };
 
       // 🔥 Update URL param without reload
-      const programSlug = (selectedAmount === "299") ? "essentials" : "intensive";
+      const programSlug = (selectedAmount === "499") ? "essentials" : "intensive";
       const newUrl = `${window.location.pathname}?program=${programSlug}`;
       history.replaceState(null, "", newUrl);
     }
@@ -324,9 +324,9 @@ const selectedProgram = urlParams.get("program");
 
 let optionToSelect;
 if (selectedProgram === "essentials") {
-  optionToSelect = document.querySelector('.program-card input[value="299"]');
-} else if (selectedProgram === "intensive") {
   optionToSelect = document.querySelector('.program-card input[value="399"]');
+} else if (selectedProgram === "intensive") {
+  optionToSelect = document.querySelector('.program-card input[value="499"]');
 }
 
 // If URL param matches → select that, else default Essentials
@@ -334,7 +334,7 @@ if (optionToSelect) {
   optionToSelect.checked = true;
   updateProgram(optionToSelect);
 } else {
-  const defaultOption = document.querySelector('.program-card input[value="299"]');
+  const defaultOption = document.querySelector('.program-card input[value="399"]');
   defaultOption.checked = true;
   updateProgram(defaultOption);
 }

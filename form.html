@@ -4,17 +4,48 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Level Up Series – Registration</title>
-  <link rel="stylesheet" href="form.css">
+  <link rel="stylesheet" href="#">
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f0f0f0; /* optional page background */
+  }
+
+  .message-box {
+    padding: 30px 50px;
+    text-align: center;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #a3b18a, #588157);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  }
+     @media (max-width: 600px) {
+      .message-box {
+        padding: 20px 10px;
+      }
+   }
+</style>
 </head>
 <body>
 
+<div class="message-box">
+    <p>Program entry is closed. Registration is no longer available.</p>
+</div>
+
     <!-- Payment Section -->
-    <section id="paymentSection">
+    <!-- <section id="paymentSection">
       <div class="payment-section">
-        <h2>Step 1: Select Your Program & Make Payment</h2>
+        <h2>Step 1: Select Your Program & Make Payment</h2> -->
 
         <!-- Program Selection -->
-        <div class="program-options">
+        <!-- <div class="program-options">
           <label class="program-card">
             <input type="radio" name="program" value="399" data-name="Level-Up Essentials" checked>
             Level-Up Essentials<br>(₹399)
@@ -23,51 +54,51 @@
             <input type="radio" name="program" value="499" data-name="Level-Up Intensive">
             Level-Up Intensive<br>(₹499)
           </label>
-        </div>
+        </div> -->
 
         <!-- QR Code -->
-        <p>Please scan the QR code below or pay using the UPI ID provided.</p>
+        <!-- <p>Please scan the QR code below or pay using the UPI ID provided.</p>
         <img id="qrCode" src="images/qr.jpg" alt="QR Code for Payment">
         <p class="hint">💡 Tip: You can click on this QR to directly open your UPI app.</p>
-        <p class="hint"><strong>After your payment, click the "Done Payment" button below.</strong></p>
+        <p class="hint"><strong>After your payment, click the "Done Payment" button below.</strong></p> -->
 
         <!-- UPI ID + Copy -->
-        <p class="upi-id">
+        <!-- <p class="upi-id">
           UPI ID: <span id="upiId">pvsana33@oksbi</span>
           <button id="copyBtn" class="copy-btn">Copy</button>
           <input type="text" id="upiText" value="upi://pay?pa=pvsana33@oksbi&pn=LevelUpSeries&am=399&cu=INR" readonly hidden/>
-        </p>
+        </p> -->
 
         <!-- Fee Display -->
-        <p id="feeDisplay" class="fee-display"></p>
+        <!-- <p id="feeDisplay" class="fee-display"></p>
 
         <p class="note">⚠️ First pay to this, then fill the form below.  
-        Provide either the <strong>payment screenshot</strong> OR <strong>Transaction ID</strong>.</p>
+        Provide either the <strong>payment screenshot</strong> OR <strong>Transaction ID</strong>.</p> -->
 
         <!-- Done Payment Button -->
-        <button id="doneBtn" class="done-btn">✅ Done Payment</button>
+        <!-- <button id="doneBtn" class="done-btn">✅ Done Payment</button>
       </div>
-    </section>
+    </section> -->
 
     <!-- Registration Form Section -->
     <!-- Registration Form Section -->
-  <section>
+  <!-- <section>
     <div class="form-container" id="formContainer">
       <h2>Register Now</h2>
       <form id="regForm">
         <input type="text" placeholder="Name*" required>
         <input type="number" placeholder="Age*" required>
         <input type="tel" placeholder="Phone Number*" required>
-        <input type="email" placeholder="Email*" required>
+        <input type="email" placeholder="Email*" required> -->
 
         <!-- readonly program field -->
-        <input id="programInput" type="text" placeholder="Selected Program*" readonly required>
+        <!-- <input id="programInput" type="text" placeholder="Selected Program*" readonly required>
 
-        <input type="text" placeholder="Instagram ID*" required>
+        <input type="text" placeholder="Instagram ID*" required> -->
 
 
         <!-- Screenshot or Transaction ID -->
-        <div class="payment-proof">
+        <!-- <div class="payment-proof">
           <p>Upload screenshot of payment done OR provide Transaction ID of payment</p>
           <div class="payment-row">
             <div id="screenshotWrapper">
@@ -83,30 +114,30 @@
           </div>
         </div>
         <button type="submit">Submit</button>
-      </form>
+      </form> -->
 
       <!-- Back to Payment Button -->
-      <button id="backToPaymentBtn" 
+      <!-- <button id="backToPaymentBtn" 
               style="margin-top:15px; padding:12px 20px; background:#555; color:white; border:none; border-radius:10px; cursor:pointer;">
         🔙 Back to Payment
       </button>
     </div>
-  </section>
+  </section> -->
 
 <!-- Loader -->
-<div id="loader" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
+<!-- <div id="loader" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
      background:rgba(0,0,0,0.5);  justify-content:center; align-items:center; z-index:9999;">
   <div style="border: 8px solid #f3f3f3; border-top: 8px solid #588157; border-radius:50%; width:60px; height:60px; animation: spin 1s linear infinite;"></div>
-</div>
+</div> -->
 
 <!-- Success Message -->
-<div id="successMessage">
+<!-- <div id="successMessage">
   <h2>✅ Your request has been successfully submitted!</h2>
   <p>Our team will connect with you through WhatsApp shortly.</p>
   <button id="closeSuccess">OK</button>
-</div>
+</div> -->
 
-<style>
+<!-- <style>
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -118,11 +149,11 @@
    (function() {
       emailjs.init("H5O8Mnk_IWGOAkzyq"); // ⚠️ Replace with your actual Public Key
    })();
-</script>
+</script> -->
 
 
 
-  <script>
+  <!-- <script>
     const qrCode = document.getElementById("qrCode");
     const feeDisplay = document.getElementById("feeDisplay");
     const programOptions = document.querySelectorAll(".program-card input");
@@ -372,7 +403,7 @@ if (optionToSelect) {
         }
     });
 
-  </script>
+  </script> -->
 
 </body>
 </html>

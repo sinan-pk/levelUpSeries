@@ -150,10 +150,10 @@
 
 
   <script>
-    const qrCode = document.getElementById("qrCode");
+    // const qrCode = document.getElementById("qrCode");
     const feeDisplay = document.getElementById("feeDisplay");
     const programOptions = document.querySelectorAll(".program-card input");
-    const upiId = document.getElementById("upiId").innerText;
+    // const upiId = document.getElementById("upiId").innerText;
     const programInput = document.getElementById("programInput");
 
     const screenshot = document.getElementById("screenshot");
@@ -172,27 +172,24 @@
       });
     });
 
-   function updateProgram(option) {
-      selectedAmount = option.value;
-      const programName = option.getAttribute("data-name");
-      feeDisplay.textContent = "Fee: ₹" + selectedAmount;
-      programInput.value = programName + " (₹" + selectedAmount + ")";
+function updateProgram(option) {
+  selectedAmount = option.value;
+  const programName = option.getAttribute("data-name");
 
-      // Highlight selected card
-      document.querySelectorAll(".program-card").forEach(card => card.classList.remove("selected"));
-      option.parentElement.classList.add("selected");
+  // Update fee display and readonly input
+  feeDisplay.textContent = "Fee: ₹" + selectedAmount;
+  programInput.value = programName + " (₹" + selectedAmount + ")";
 
-      // Update QR click to UPI intent
-      qrCode.onclick = function() {
-        const upiLink = `upi://pay?pa=${upiId}&pn=LevelUpSeries&am=${selectedAmount}&cu=INR`;
-        window.location.href = upiLink;
-      };
+  // Highlight selected card
+  document.querySelectorAll(".program-card").forEach(card => card.classList.remove("selected"));
+  option.parentElement.classList.add("selected");
 
-      // 🔥 Update URL param without reload
-      const programSlug = (selectedAmount === "299") ? "essentials" : "intensive";
-      const newUrl = `${window.location.pathname}?program=${programSlug}`;
-      history.replaceState(null, "", newUrl);
-    }
+  // 🔥 Update URL param without reload
+  const programSlug = (selectedAmount === "299") ? "essentials" : "intensive";
+  const newUrl = `${window.location.pathname}?program=${programSlug}`;
+  history.replaceState(null, "", newUrl);
+}
+
 
 
     // Default select Essentials program on load
@@ -202,18 +199,18 @@
     // }
 
     // Copy UPI with button state change
-    const copyBtn = document.getElementById("copyBtn");
-    const upiText = document.getElementById("upiText");
-    copyBtn.addEventListener("click", () => {
-      navigator.clipboard.writeText(upiText.value).then(() => {
-        copyBtn.textContent = "Copied";
-        copyBtn.disabled = true;
-        setTimeout(() => {
-          copyBtn.textContent = "Copy";
-          copyBtn.disabled = false;
-        }, 3000);
-      }).catch(err => console.error("Copy failed", err));
-    });
+    // const copyBtn = document.getElementById("copyBtn");
+    // const upiText = document.getElementById("upiText");
+    // copyBtn.addEventListener("click", () => {
+    //   navigator.clipboard.writeText(upiText.value).then(() => {
+    //     copyBtn.textContent = "Copied";
+    //     copyBtn.disabled = true;
+    //     setTimeout(() => {
+    //       copyBtn.textContent = "Copy";
+    //       copyBtn.disabled = false;
+    //     }, 3000);
+    //   }).catch(err => console.error("Copy failed", err));
+    // });
 
     // Show form when payment done
     doneBtn.addEventListener("click", () => {

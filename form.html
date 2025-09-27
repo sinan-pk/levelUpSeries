@@ -40,7 +40,7 @@
 </div> -->
 
     <!-- Payment Section -->
-     <section id="paymentSection">
+    <section id="paymentSection">
       <div class="payment-section">
         <h2>Step 1: Select Your Program & Make Payment</h2>
 
@@ -56,29 +56,26 @@
           </label>
         </div>
 
-        <!-- QR Code -->
-        <p>Please scan the QR code below or pay using the UPI ID provided.</p>
-        <img id="qrCode" src="images/qr.jpg" alt="QR Code for Payment">
-        <p class="hint">💡 Tip: You can click on this QR to directly open your UPI app.</p>
+        <!-- Bank Transfer Info -->
+        <p>Please make the payment to the following bank account:</p>
+        <div class="bank-details" style="margin:15px 0; padding:15px; border:1px solid #ccc; border-radius:10px; background:#f9f9f9;">
+          <p><strong>Account Number:</strong> 42364460586</p>
+          <p><strong>IFSC Code:</strong> SBIN0070199</p>
+          <p><strong>Bank:</strong> State Bank of India</p>
+        </div>
         <p class="hint"><strong>After your payment, click the "Done Payment" button below.</strong></p>
-
-        <!-- UPI ID + Copy -->
-        <p class="upi-id">
-          UPI ID: <span id="upiId">pvsana33@oksbi</span>
-          <button id="copyBtn" class="copy-btn">Copy</button>
-          <input type="text" id="upiText" value="upi://pay?pa=pvsana33@oksbi&pn=LevelUpSeries&am=399&cu=INR" readonly hidden/>
-        </p>
 
         <!-- Fee Display -->
         <p id="feeDisplay" class="fee-display"></p>
 
-        <p class="note">⚠️ First pay to this, then fill the form below.  
+        <p class="note">⚠️ First pay to this account, then fill the form below.  
         Provide either the <strong>payment screenshot</strong> OR <strong>Transaction ID</strong>.</p>
 
         <!-- Done Payment Button -->
         <button id="doneBtn" class="done-btn">✅ Done Payment</button>
       </div>
     </section>
+
 
     <!-- Registration Form Section -->
     <!-- Registration Form Section -->

@@ -59,8 +59,16 @@
         <!-- Bank Transfer Info -->
         <p>Please make the payment to the following bank account:</p>
         <div class="bank-details" style="margin:15px 0; padding:15px; border:1px solid #ccc; border-radius:10px; background:#f9f9f9;">
-          <p><strong>Account Number:</strong> 42364460586</p>
-          <p><strong>IFSC Code:</strong> SBIN0070199</p>
+          <p>
+            <strong>Account Number:</strong> 
+            <span id="accountNumber">42364460586</span>
+            <button class="copy-btn" data-copy-target="accountNumber">Copy</button>
+          </p>
+          <p>
+            <strong>IFSC Code:</strong> 
+            <span id="ifscCode">SBIN0070199</span>
+            <button class="copy-btn" data-copy-target="ifscCode">Copy</button>
+          </p>
           <p><strong>Bank:</strong> State Bank of India</p>
         </div>
         <p class="hint"><strong>After your payment, click the "Done Payment" button below.</strong></p>
@@ -394,6 +402,28 @@ if (optionToSelect) {
             event.preventDefault();
         }
     });
+
+
+    document.querySelectorAll(".copy-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const targetId = btn.getAttribute("data-copy-target");
+    const textToCopy = document.getElementById(targetId).innerText;
+
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      const originalText = btn.textContent;
+      btn.textContent = "Copied";
+      btn.disabled = true;
+
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }, 3000);
+    }).catch(err => {
+      console.error("Copy failed: ", err);
+      alert("Failed to copy text.");
+    });
+  });
+});
 
   </script>
 

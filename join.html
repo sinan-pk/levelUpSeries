@@ -47,12 +47,12 @@
         <!-- Program Selection -->
         <div class="program-options">
           <label class="program-card">
-            <input type="radio" name="program" value="299" data-name="Level-Up Essentials" checked>
+            <input type="radio" name="program" value="299" data-name="  previou-participants-Level-Up Essentials" checked>
             Level-Up Essentials<br>(₹299)
           </label>
           <label class="program-card">
-            <input type="radio" name="program" value="399" data-name="Level-Up Intensive">
-            Level-Up Intensive<br>(₹399)
+            <input type="radio" name="program" value="299" data-name=" previou-participants-Level-Up Intensive">
+            Level-Up Intensive<br>(₹299)
           </label>
         </div>
 
@@ -193,7 +193,7 @@
       };
 
       // 🔥 Update URL param without reload
-      const programSlug = (selectedAmount === "399") ? "essentials" : "intensive";
+      const programSlug = (selectedAmount === "299") ? "essentials" : "intensive";
       const newUrl = `${window.location.pathname}?program=${programSlug}`;
       history.replaceState(null, "", newUrl);
     }
@@ -371,7 +371,7 @@ let optionToSelect;
 if (programValue === "essentials") {
   optionToSelect = document.querySelector('.program-card input[value="299"]');
 } else if (programValue === "intensive") {
-  optionToSelect = document.querySelector('.program-card input[value="399"]');
+  optionToSelect = document.querySelector('.program-card input[value="299"]');
 }
 
 // Select program

@@ -21,7 +21,7 @@
     justify-content: space-between;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* soft shadow */
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-   height: 200px; /* fixed box height */
+   height: 250px; /* fixed box height */
 }
 
 
@@ -63,4 +63,35 @@ audio::-webkit-media-controls-mute-button {
     margin-top: 20px;
     display: flex;
     justify-content: flex-end;
+}
+
+.boxMiddle {
+    max-height: 150px; /* initial collapsed height */
+    overflow: hidden;
+    position: relative;
+}
+
+.boxMiddle.expanded {
+    max-height: 400px; /* or any height that allows scrolling */
+    overflow-y: auto; /* enable vertical scroll */
+}
+
+.read-more {
+    display: inline-block;
+    margin-top: 5px;
+    color: blue;
+    cursor: pointer;
+    font-weight: bold;
+}
+.scrollable-feedback {
+    display: none;         /* hidden initially */
+    max-height: 100px;     /* height limit */
+    overflow-y: auto;      /* scrollable */
+    padding-right: 5px;    /* for scrollbar spacing */
+    margin-top: 5px;
+    border: 1px solid #ccc; /* optional: show boundary */
+    white-space: pre-wrap;  /* preserve line breaks */
+}
+.scrollable-feedback {
+    scroll-behavior: smooth;
 }

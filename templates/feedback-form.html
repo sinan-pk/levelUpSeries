@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback Admin</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    .hidden { display: none; }
+    .inputGroups { display: block; margin: 10px 0; }
+
+
+  /* Reset some default styles */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  body {
+    background: #f5f6fa;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 10px;
+  }
+
+  .mainContainer {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .wrapper {
+    background: #fff;
+    padding: 30px 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  h3 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+    font-size: 24px;
+  }
+
+  .inputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .inputGroups {
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #555;
+  }
+
+  input[type="text"],
+  input[type="date"],
+  input[type="file"],
+  select {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.2s;
+  }
+
+  input[type="text"]:focus,
+  input[type="date"]:focus,
+  select:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 5px rgba(74,144,226,0.3);
+  }
+
+  input[type="file"] {
+    padding: 5px 3px;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px 0;
+    border: none;
+    background: #4a90e2;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  button[type="submit"]:hover {
+    background: #357abd;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .wrapper {
+      padding: 20px 15px;
+    }
+
+    h3 {
+      font-size: 20px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    select {
+      font-size: 14px;
+    }
+
+    button[type="submit"] {
+      font-size: 16px;
+    }
+  }
+</style>
+
+</head>
+<body>
+  <section class="mainContainer">
+    <div class="wrapper">
+      <form id="feedbackForm">
+        <h3>Feedback Adding</h3>
+
+        <div class="inputContainer">
+          <span class="inputGroups">
+            <label for="name">Name:</label>
+            <input type="text" id="name">
+          </span>
+          <span class="inputGroups">
+            <label for="social_id">Social Id:</label>
+            <input type="text" id="social_id">
+          </span>
+          <span class="inputGroups">
+            <label for="social_link">Social Link:</label>
+            <input type="text" id="social_link">
+          </span>
+          <span class="inputGroups">
+            <label for="profile">Profile:</label>
+            <input type="file" id="profile" accept="image/*">
+          </span>
+          <span class="inputGroups">
+            <label for="gender">Gender:</label>
+            <select id="gender">
+              <option value="">--Select--</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </span>
+          <span class="inputGroups" id="feedbackGroup">
+            <label for="feedback">Feedback:</label>
+            <input type="text" id="feedback">
+          </span>
+          <span class="inputGroups" id="audioGroup">
+            <label for="audio">Audio:</label>
+            <input type="file" id="audio" accept="audio/*">
+          </span>
+          <span class="inputGroups" id="mediaGroup">
+            <label for="media">Video or Photo:</label>
+            <input type="file" id="media" accept="video/*,image/*">
+          </span>
+          <span class="inputGroups">
+            <label for="date">Date:</label>
+            <input type="date" id="date">
+          </span>
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    // === Supabase setup ===
+    const supabaseUrl = "https://wtthkiphoetalvyocbru.supabase.co"; 
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind0dGhraXBob2V0YWx2eW9jYnJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzE3MDcsImV4cCI6MjA3NDcwNzcwN30.UG2bLGUSxsVtDKFCvfwIdCmPdjo-wfoRLZmCZMPSDn0"; // replace with your anon key
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    // === Exclusive visibility logic ===
+    const feedbackInput = document.getElementById("feedback");
+    const audioInput = document.getElementById("audio");
+    const mediaInput = document.getElementById("media");
+
+    function enforceExclusive() {
+      if (feedbackInput.value) {
+        document.getElementById("audioGroup").classList.add("hidden");
+        document.getElementById("mediaGroup").classList.add("hidden");
+      } else if (audioInput.files.length) {
+        document.getElementById("feedbackGroup").classList.add("hidden");
+        document.getElementById("mediaGroup").classList.add("hidden");
+      } else if (mediaInput.files.length) {
+        document.getElementById("feedbackGroup").classList.add("hidden");
+        document.getElementById("audioGroup").classList.add("hidden");
+      } else {
+        document.getElementById("feedbackGroup").classList.remove("hidden");
+        document.getElementById("audioGroup").classList.remove("hidden");
+        document.getElementById("mediaGroup").classList.remove("hidden");
+      }
+    }
+
+    feedbackInput.addEventListener("input", enforceExclusive);
+    audioInput.addEventListener("change", enforceExclusive);
+    mediaInput.addEventListener("change", enforceExclusive);
+
+    // === File upload helper ===
+    async function uploadFile(bucket, file) {
+      if (!file) return null;
+      const filePath = `${Date.now()}_${file.name}`;
+      const { error } = await supabase.storage.from(bucket).upload(filePath, file);
+      if (error) {
+        console.error("Upload error:", error.message);
+        alert(`Error uploading ${file.name}`);
+        return null;
+      }
+      const { data } = supabase.storage.from(bucket).getPublicUrl(filePath);
+      return data.publicUrl;
+    }
+
+    // === Form submit ===
+    document.getElementById("feedbackForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      if (!feedbackInput.value && !audioInput.files.length && !mediaInput.files.length) {
+        alert("Please provide at least Feedback OR Audio OR Video/Photo.");
+        return;
+      }
+
+      // Upload files
+      const profileFile = document.getElementById("profile").files[0];
+      const audioFile = audioInput.files[0];
+      const mediaFile = mediaInput.files[0];
+
+      const profileUrl = await uploadFile("profiles", profileFile);
+      const audioUrl = await uploadFile("audios", audioFile);
+      const mediaUrl = await uploadFile("media", mediaFile);
+
+      // Insert record into feedbacks table
+      const data = {
+        name: document.getElementById("name").value,
+        social_id: document.getElementById("social_id").value,
+        social_link: document.getElementById("social_link").value,
+        gender: document.getElementById("gender").value,
+        feedback: feedbackInput.value,
+        date: document.getElementById("date").value,
+        profile_url: profileUrl,
+        audio_url: audioUrl,
+        media_url: mediaUrl,
+      };
+
+      const { error } = await supabase.from("feedbacks").insert([data]);
+      if (error) {
+        console.error(error);
+        alert("Error saving feedback!");
+      } else {
+        alert("Feedback submitted successfully!");
+        e.target.reset();
+        enforceExclusive(); // reset visibility after submit
+      }
+    });
+  </script>
+</body>
+</html>

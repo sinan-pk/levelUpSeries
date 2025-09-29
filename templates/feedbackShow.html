@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedbacks</title>
+    <link rel="stylesheet" href="../styles/feedback.css">
+ 
+</head>
+<body>
+    <section class="boxContainer" id="feedbackContainer">
+        <!-- Boxes will be injected here dynamically -->
+    </section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+
+document.addEventListener("DOMContentLoaded", async () => {
+    const supabaseUrl = "https://wtthkiphoetalvyocbru.supabase.co"; 
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind0dGhraXBob2V0YWx2eW9jYnJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzE3MDcsImV4cCI6MjA3NDcwNzcwN30.UG2bLGUSxsVtDKFCvfwIdCmPdjo-wfoRLZmCZMPSDn0";
+    
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+    const container = document.getElementById('feedbackContainer');
+
+    async function loadFeedbacks() {
+        const { data: feedbacks, error } = await supabase
+            .from('feedbacks')
+            .select('*')
+            .order('date', { ascending: false });
+
+        if (error) {
+            console.error(error);
+            container.innerHTML = "<p>Error loading feedbacks.</p>";
+            return;
+        }
+
+        container.innerHTML = "";
+
+        feedbacks.forEach(fb => {
+            const box = document.createElement('div');
+            box.className = 'boxes';
+
+            // Profile image fallback based on gender
+            let profileSrc = '../assets/images/male.png'; // default
+            if (fb.profile_url) {
+                profileSrc = fb.profile_url;
+            } else if (fb.gender) {
+                profileSrc = fb.gender.toLowerCase() === 'female' 
+                    ? '../assets/images/female.png' 
+                    : '../assets/images/male.png';
+            }
+
+            const boxTop = document.createElement('div');
+            boxTop.className = 'boxTop';
+            boxTop.innerHTML = `
+                <div class="profileContainer">
+                    <img src="${profileSrc}" alt="profile" class="profileImage">
+                </div>
+            `;
+            box.appendChild(boxTop);
+
+            // Middle content
+            const boxMiddle = document.createElement('div');
+            boxMiddle.className = 'boxMiddle';
+            let middleContent = '';
+
+            if (fb.feedback) {
+                if (fb.feedback.length > 200) {
+                    const shortText = fb.feedback.substring(0, 200) + '...';
+                    middleContent += `
+                    <div class="feedbackWrapper">
+                        <p class="profileFeedback short-feedback">${shortText}
+                            <span class="read-more">Read more</span>
+                        </p>
+                        <div class="profileFeedback full-feedback scrollable-feedback">${fb.feedback}</div>
+                    </div>    
+                    `;
+                } else {
+                    middleContent += `<p class="profileFeedback">${fb.feedback}</p>`;
+                }
+            } else if (fb.audio_url) {
+                middleContent += `
+                    <p class="profileFeedback">
+                        <audio controls controlsList="nodownload noplaybackrate novolume" class="myAudio">
+                            <source src="${fb.audio_url}" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <button class="speedBtn">1x</button>
+                    </p>
+                `;
+            } else if (fb.media_url) {
+                const ext = fb.media_url.split('.').pop().toLowerCase();
+                if (['jpg','jpeg','png','gif','webp'].includes(ext)) {
+                    middleContent += `<p class="profileFeedback"><img src="${fb.media_url}" alt="media" class="mediaContent"></p>`;
+                } else if (['mp4','webm','ogg'].includes(ext)) {
+                    middleContent += `
+                        <p class="profileFeedback">
+                            <video controls class="mediaContent">
+                                <source src="${fb.media_url}" type="video/${ext}">
+                                Your browser does not support the video element.
+                            </video>
+                        </p>
+                    `;
+                }
+            }
+
+            boxMiddle.innerHTML = middleContent;
+            box.appendChild(boxMiddle);
+
+            const boxBottom = document.createElement('div');
+            boxBottom.className = 'boxBottom';
+            box.appendChild(boxBottom);
+
+            container.appendChild(box);
+        });
+
+        // Add Read More functionality
+container.querySelectorAll('.read-more').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const shortFeedback = btn.closest('.short-feedback');
+        const fullFeedback = shortFeedback.nextElementSibling;
+
+        shortFeedback.style.display = 'none';
+        fullFeedback.style.display = 'block';
+        // max height and scroll already in CSS
+    });
+});
+        // Add Read More click functionality
+      container.querySelectorAll('.speedBtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const audio = btn.previousElementSibling; // audio element
+        let currentRate = audio.playbackRate;
+        let newRate;
+
+        if (currentRate === 1) newRate = 1.5;
+        else if (currentRate === 1.5) newRate = 2;
+        else newRate = 1;
+
+        audio.playbackRate = newRate;
+        btn.textContent = newRate + 'x';
+    });
+});
+
+
+    }
+
+    loadFeedbacks();
+});
+</script>
+
+
+</body>
+</html>
